@@ -1,17 +1,15 @@
 #include "brute_force.h"
 
 #include <algorithm>
+#include <cmath>
 #include <limits>
 #include <vector>
 
 std::vector<Location> bruteForceTSP(const std::vector<Location>& locations) {
-    if (locations.empty()) {
-        return {};
-    }
+    if (locations.empty()) return {};
 
     std::vector<Location> bestRoute = locations;
     double bestDistance = std::numeric_limits<double>::infinity();
-
     std::vector<Location> route = locations;
     do {
         double totalDistance = 0.0;
@@ -20,12 +18,7 @@ std::vector<Location> bruteForceTSP(const std::vector<Location>& locations) {
             const double dy = route[i - 1].y - route[i].y;
             totalDistance += std::sqrt(dx * dx + dy * dy);
         }
-
-        if (totalDistance < bestDistance) {
-            bestDistance = totalDistance;
-            bestRoute = route;
-        }
+        if (totalDistance < bestDistance) { bestDistance = totalDistance; bestRoute = route; }
     } while (std::next_permutation(route.begin(), route.end()));
-
     return bestRoute;
 }
